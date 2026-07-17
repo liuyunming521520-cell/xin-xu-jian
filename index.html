@@ -1,0 +1,3120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>心绪笺 - 先安心，再用心</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap');
+
+:root {
+    --paper: #fbfaf4;
+    --paper-deep: #f1eee4;
+    --paper-line: rgba(76, 94, 87, 0.09);
+    --ink: #25312d;
+    --muted: #697870;
+    --soft: #8a9a92;
+    --moss: #477c6b;
+    --moss-deep: #2f6256;
+    --lake: #5c709d;
+    --amber: #d8a64b;
+    --rose: #a45f64;
+    --danger: #ba343d;
+    --white: rgba(255, 255, 255, 0.86);
+    --shadow: 0 18px 48px rgba(37, 49, 45, 0.12);
+    --soft-shadow: 0 10px 28px rgba(37, 49, 45, 0.08);
+    --radius: 8px;
+    --radius-sm: 6px;
+    --nav-height: 72px;
+    --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    color: var(--ink);
+    font-family: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
+    background:
+        linear-gradient(90deg, var(--paper-line) 1px, transparent 1px) 0 0 / 28px 28px,
+        linear-gradient(180deg, rgba(255,255,255,0.72), rgba(241,238,228,0.92)),
+        var(--paper);
+    line-height: 1.6;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(120deg, transparent 0 28%, rgba(71,124,107,0.07) 28% 28.35%, transparent 28.35% 100%),
+        repeating-linear-gradient(0deg, rgba(37,49,45,0.035) 0 1px, transparent 1px 13px);
+    mix-blend-mode: multiply;
+    opacity: 0.75;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    color: inherit;
+}
+
+a {
+    color: inherit;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Noto Serif SC', serif;
+    letter-spacing: 0;
+    line-height: 1.18;
+    overflow-wrap: break-word;
+}
+
+h1 {
+    font-size: clamp(2.05rem, 3.9vw, 4rem);
+    max-width: 860px;
+}
+
+h1 span {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+h2 {
+    font-size: clamp(1.55rem, 2.5vw, 2.45rem);
+}
+
+h3 {
+    font-size: 1.24rem;
+}
+
+.safety-strip {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    min-height: 36px;
+    padding: 7px 16px;
+    background: #2f6256;
+    color: #fffdf5;
+    font-size: 0.9rem;
+}
+
+.safety-strip a {
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.55);
+}
+
+.app-header {
+    position: relative;
+    z-index: 15;
+    display: grid;
+    grid-template-columns: minmax(250px, 1fr) auto;
+    gap: 14px;
+    align-items: center;
+    width: min(1180px, calc(100% - 32px));
+    margin: 14px auto 0;
+    padding: 12px 14px;
+    background: rgba(251, 250, 244, 0.84);
+    border: 1px solid rgba(37, 49, 45, 0.1);
+    border-radius: var(--radius);
+    box-shadow: var(--soft-shadow);
+    backdrop-filter: blur(18px);
+}
+
+.brand-mark {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.brand-seal {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    border: 1px solid rgba(164, 95, 100, 0.45);
+    border-radius: var(--radius-sm);
+    color: #fffdf5;
+    background: var(--rose);
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    box-shadow: 0 8px 18px rgba(164, 95, 100, 0.22);
+}
+
+.brand-mark strong {
+    display: block;
+    color: var(--ink);
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.35rem;
+    line-height: 1.2;
+}
+
+.brand-mark span:not(.brand-seal):not(.version-tag) {
+    display: block;
+    color: var(--muted);
+    font-size: 0.88rem;
+}
+
+.version-tag,
+.local-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 28px;
+    padding: 4px 10px;
+    border: 1px solid rgba(71, 124, 107, 0.2);
+    border-radius: 999px;
+    color: var(--moss-deep);
+    background: rgba(71, 124, 107, 0.09);
+    font-size: 0.78rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.header-tools {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.main-nav {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    padding-top: 4px;
+}
+
+.nav-btn,
+.dropdown-selected,
+.dropdown-option,
+.icon-button,
+.btn-primary,
+.btn-secondary,
+.btn-outline {
+    border: 0;
+    cursor: pointer;
+    transition: transform 220ms var(--ease), box-shadow 220ms var(--ease), background 220ms var(--ease), color 220ms var(--ease), border-color 220ms var(--ease);
+}
+
+.nav-btn {
+    min-height: 42px;
+    padding: 8px 12px;
+    border: 1px solid rgba(37, 49, 45, 0.1);
+    border-radius: var(--radius-sm);
+    color: var(--muted);
+    background: rgba(255,255,255,0.54);
+    font-weight: 700;
+}
+
+.nav-btn:hover,
+.nav-btn.active {
+    color: #fffdf5;
+    background: var(--moss-deep);
+    box-shadow: 0 10px 20px rgba(47, 98, 86, 0.18);
+}
+
+.custom-dropdown {
+    position: relative;
+}
+
+.dropdown-selected {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-width: 126px;
+    min-height: 40px;
+    padding: 8px 12px;
+    border: 1px solid rgba(37,49,45,0.12);
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.7);
+    color: var(--ink);
+    font-weight: 700;
+}
+
+.dropdown-options {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 30;
+    display: grid;
+    min-width: 136px;
+    padding: 6px;
+    border: 1px solid rgba(37,49,45,0.12);
+    border-radius: var(--radius-sm);
+    background: var(--paper);
+    box-shadow: var(--soft-shadow);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity 180ms var(--ease), transform 180ms var(--ease);
+}
+
+.custom-dropdown.open .dropdown-options {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.dropdown-option {
+    padding: 9px 10px;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    text-align: left;
+    color: var(--ink);
+}
+
+.dropdown-option:hover,
+.dropdown-option.active {
+    color: #fffdf5;
+    background: var(--moss);
+}
+
+.icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    min-width: 58px;
+    height: 40px;
+    flex: 0 0 auto;
+    padding: 0 14px;
+    border: 1px solid rgba(37,49,45,0.12);
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.66);
+    color: var(--ink);
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.icon-button:hover,
+.icon-button.active {
+    color: #fffdf5;
+    background: var(--lake);
+}
+
+.ambient-btn.active {
+    animation: soundPulse 1.35s ease-in-out infinite;
+}
+
+.send-button {
+    width: 52px;
+    min-width: 52px;
+    flex: 0 0 52px;
+    padding: 0;
+    background: var(--moss-deep);
+    color: #fffdf5;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px 18px;
+    border-radius: var(--radius-sm);
+    font-weight: 800;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.btn-primary {
+    color: #fffdf5;
+    background: var(--moss-deep);
+    box-shadow: 0 12px 24px rgba(47,98,86,0.22);
+}
+
+.btn-secondary {
+    color: #fffdf5;
+    background: var(--lake);
+}
+
+.btn-outline {
+    border: 1px solid rgba(37,49,45,0.16);
+    color: var(--ink);
+    background: rgba(255,255,255,0.68);
+}
+
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-outline:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--soft-shadow);
+}
+
+.btn-primary:active,
+.btn-secondary:active,
+.btn-outline:active,
+.icon-button:active,
+.nav-btn:active,
+.module-tab:active,
+.filter-chip:active {
+    transform: translateY(1px) scale(0.98);
+}
+
+.danger-button {
+    color: var(--danger);
+}
+
+.danger-fill {
+    width: 100%;
+    background: var(--danger);
+}
+
+#app-container {
+    position: relative;
+    z-index: 5;
+    width: min(1180px, calc(100% - 32px));
+    min-height: calc(100vh - 170px);
+    min-height: calc(100dvh - 170px);
+    margin: 14px auto 18px;
+}
+
+.view {
+    position: relative;
+    display: none;
+    flex-direction: column;
+    gap: 18px;
+    overflow: visible;
+    padding: 2px 2px 28px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(16px);
+    transition: opacity 320ms var(--ease), transform 360ms var(--ease);
+}
+
+.view.active {
+    display: flex;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+.view.active .paper-panel {
+    animation: panelRise 360ms var(--ease) both;
+}
+
+.view.active .paper-panel:nth-child(2) {
+    animation-delay: 50ms;
+}
+
+.paper-panel {
+    position: relative;
+    min-width: 0;
+    border: 1px solid rgba(37, 49, 45, 0.12);
+    border-radius: var(--radius);
+    background:
+        linear-gradient(180deg, rgba(255,255,255,0.78), rgba(255,255,255,0.56)),
+        repeating-linear-gradient(0deg, transparent 0 29px, rgba(71,124,107,0.08) 29px 30px),
+        var(--paper);
+    box-shadow: var(--soft-shadow);
+}
+
+.workbench-grid > *,
+.module-grid > *,
+.write-layout > *,
+.chart-zone > *,
+.safety-grid > *,
+.theory-list > * {
+    min-width: 0;
+}
+
+.paper-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 5px;
+    border-radius: var(--radius) 0 0 var(--radius);
+    background: var(--module-color, var(--moss));
+}
+
+.module-card {
+    transition: transform 220ms var(--ease), box-shadow 220ms var(--ease), border-color 220ms var(--ease);
+}
+
+.module-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+}
+
+.workbench-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.8fr);
+    gap: 18px;
+}
+
+.thesis-panel,
+.today-panel,
+.records-top,
+.entries-panel,
+.about-lead,
+.theory-map {
+    padding: clamp(22px, 3vw, 34px);
+}
+
+.thesis-panel {
+    overflow: hidden;
+}
+
+.eyebrow {
+    margin-bottom: 10px;
+    color: var(--moss-deep);
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.lead {
+    max-width: 700px;
+    margin-top: 16px;
+    color: var(--muted);
+    font-size: 1.08rem;
+}
+
+.evidence-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin: 28px 0;
+}
+
+.evidence-row div,
+.mini-stats div,
+.record-metrics div {
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid rgba(37,49,45,0.1);
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.62);
+}
+
+.evidence-row strong,
+.mini-stats strong,
+.record-metrics strong {
+    display: block;
+    font-family: 'Noto Serif SC', serif;
+    color: var(--ink);
+    font-size: 1.9rem;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+}
+
+.evidence-row span,
+.mini-stats span,
+.record-metrics span {
+    display: block;
+    margin-top: 7px;
+    color: var(--muted);
+    font-size: 0.86rem;
+}
+
+.thesis-actions,
+.writer-actions,
+.entry-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.panel-title-row,
+.writer-head,
+.entries-head,
+.modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+#btn-open-module-list {
+    min-width: 112px;
+    flex: 0 0 auto;
+}
+
+.section-heading {
+    display: block;
+}
+
+.section-heading h2 {
+    margin-top: 4px;
+}
+
+.loop-track {
+    display: grid;
+    gap: 10px;
+    margin: 22px 0;
+}
+
+.loop-track span {
+    position: relative;
+    padding: 10px 12px 10px 18px;
+    border: 1px solid rgba(37,49,45,0.1);
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.6);
+    color: var(--ink);
+    font-weight: 800;
+}
+
+.loop-track span::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--amber);
+    transform: translateY(-50%);
+}
+
+.mini-stats,
+.record-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.record-metrics {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-top: 18px;
+    margin-bottom: 0;
+}
+
+.module-section {
+    padding-bottom: 12px;
+}
+
+.module-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 14px;
+}
+
+.module-card {
+    --module-color: var(--moss);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 272px;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.module-card::after {
+    content: attr(data-index);
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    color: rgba(37,49,45,0.09);
+    font-family: 'Noto Serif SC', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.module-card h3 {
+    max-width: 82%;
+    margin-bottom: 10px;
+}
+
+.module-card p {
+    color: var(--muted);
+    font-size: 0.94rem;
+}
+
+.module-card .module-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 14px 0;
+}
+
+.module-card .module-tags span {
+    padding: 4px 8px;
+    border-radius: 999px;
+    color: var(--module-color);
+    background: color-mix(in srgb, var(--module-color) 10%, white);
+    font-size: 0.75rem;
+    font-weight: 800;
+}
+
+.module-card button {
+    margin-top: auto;
+}
+
+.write-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
+    gap: 18px;
+    min-height: 100%;
+}
+
+.writer-board,
+.coach-card,
+.chat-card {
+    padding: 22px;
+}
+
+.writer-board {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.writer-head p:last-child {
+    max-width: 700px;
+    margin-top: 8px;
+    color: var(--muted);
+}
+
+.module-tabs,
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.view.active .module-tabs,
+.view.active .step-progress,
+.view.active .writing-step,
+.view.active .learning-close,
+.view.active .writer-actions {
+    animation: panelRise 360ms var(--ease) both;
+}
+
+.view.active .step-progress {
+    animation-delay: 60ms;
+}
+
+.view.active .writing-step {
+    animation-delay: 90ms;
+}
+
+.view.active .learning-close {
+    animation-delay: 120ms;
+}
+
+.view.active .writer-actions {
+    animation-delay: 150ms;
+}
+
+.module-tab,
+.filter-chip {
+    min-height: 36px;
+    padding: 7px 12px;
+    border: 1px solid rgba(37,49,45,0.12);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.6);
+    color: var(--muted);
+    cursor: pointer;
+    font-weight: 800;
+    transition: transform 200ms var(--ease), box-shadow 200ms var(--ease), background 200ms var(--ease), color 200ms var(--ease), border-color 200ms var(--ease);
+}
+
+.module-tab:hover,
+.filter-chip:hover {
+    color: var(--moss-deep);
+    border-color: rgba(47,98,86,0.22);
+    background: rgba(255,255,255,0.82);
+    box-shadow: 0 8px 18px rgba(37,49,45,0.08);
+    transform: translateY(-2px);
+}
+
+.module-tab.active,
+.filter-chip.active {
+    color: #fffdf5;
+    background: var(--moss-deep);
+    box-shadow: 0 8px 18px rgba(47,98,86,0.18);
+}
+
+.step-progress {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.step-dot {
+    min-height: 8px;
+    border-radius: 999px;
+    background: rgba(37,49,45,0.12);
+    overflow: hidden;
+}
+
+.step-dot span {
+    display: block;
+    width: 0;
+    height: 100%;
+    background: var(--module-color, var(--moss));
+    transition: width 260ms var(--ease);
+}
+
+.step-dot.active span,
+.step-dot.done span {
+    width: 100%;
+}
+
+.writing-step {
+    display: grid;
+    grid-template-columns: minmax(210px, 0.42fr) minmax(0, 1fr);
+    gap: 16px;
+}
+
+.question-card {
+    padding: 18px;
+    border: 1px solid rgba(37,49,45,0.12);
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.6);
+}
+
+.question-card span {
+    display: inline-flex;
+    margin-bottom: 10px;
+    color: var(--module-color, var(--moss));
+    font-weight: 900;
+}
+
+.question-card p {
+    margin-top: 10px;
+    color: var(--muted);
+}
+
+#step-textarea,
+#chat-input,
+#learning-step-input,
+.form-input,
+select {
+    width: 100%;
+    border: 1px solid rgba(37,49,45,0.14);
+    border-radius: var(--radius-sm);
+    color: var(--ink);
+    background: rgba(255,255,255,0.74);
+    outline: none;
+    transition: border-color 160ms var(--ease), box-shadow 160ms var(--ease), background 160ms var(--ease);
+}
+
+select {
+    cursor: pointer;
+}
+
+#step-textarea:hover,
+#chat-input:hover,
+#learning-step-input:hover,
+.form-input:hover,
+select:hover {
+    border-color: rgba(47,98,86,0.26);
+    background: rgba(255,255,255,0.9);
+}
+
+#step-textarea {
+    min-height: 248px;
+    padding: 18px;
+    resize: vertical;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.08rem;
+    line-height: 1.9;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+#step-textarea::placeholder,
+#chat-input::placeholder,
+#learning-step-input::placeholder {
+    color: rgba(105, 120, 112, 0.72);
+}
+
+#chat-input {
+    min-height: 48px;
+    max-height: 108px;
+    padding: 11px 12px;
+    resize: none;
+}
+
+#learning-step-input,
+.form-input,
+select {
+    min-height: 44px;
+    padding: 10px 12px;
+}
+
+#step-textarea:focus,
+#chat-input:focus,
+#learning-step-input:focus,
+.form-input:focus,
+select:focus {
+    border-color: var(--moss);
+    background: #fff;
+    box-shadow: 0 0 0 4px rgba(71,124,107,0.12);
+}
+
+.step-meta {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.step-meta label,
+.learning-close label,
+.form-group label {
+    display: grid;
+    gap: 7px;
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.step-meta label,
+.learning-close {
+    transition: transform 200ms var(--ease), opacity 200ms var(--ease);
+}
+
+.step-meta label:focus-within,
+.learning-close:focus-within {
+    transform: translateY(-2px);
+}
+
+.learning-close {
+    display: grid;
+    gap: 8px;
+}
+
+.step-input-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+}
+
+.coach-column {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 18px;
+    min-height: 0;
+}
+
+.coach-output {
+    margin-top: 14px;
+    padding: 16px;
+    border-left: 4px solid var(--amber);
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.66);
+    color: var(--ink);
+    line-height: 1.8;
+    white-space: pre-wrap;
+}
+
+.chat-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 420px;
+}
+
+.chat-history {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 220px;
+    max-height: 420px;
+    margin: 14px 0;
+    overflow-y: auto;
+    padding-right: 4px;
+    scrollbar-width: thin;
+}
+
+.message {
+    display: flex;
+    max-width: 88%;
+    animation: riseIn 260ms var(--ease) both;
+}
+
+.message.ai,
+.message.assistant {
+    align-self: flex-start;
+}
+
+.message.user {
+    align-self: flex-end;
+}
+
+.message.system {
+    align-self: center;
+    max-width: 100%;
+}
+
+.msg-content {
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    box-shadow: 0 5px 14px rgba(37,49,45,0.07);
+}
+
+.message.assistant .msg-content,
+.message.ai .msg-content {
+    border: 1px solid rgba(37,49,45,0.1);
+    background: rgba(255,255,255,0.78);
+}
+
+.message.user .msg-content {
+    color: #fffdf5;
+    background: var(--moss-deep);
+}
+
+.message.system .msg-content {
+    color: var(--muted);
+    background: transparent;
+    box-shadow: none;
+    font-size: 0.86rem;
+}
+
+.typing-indicator {
+    display: none;
+    gap: 4px;
+    align-items: center;
+    width: fit-content;
+    padding: 9px 12px;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.72);
+}
+
+.typing-indicator span {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--moss);
+    animation: typingPulse 900ms ease-in-out infinite;
+}
+
+.typing-indicator span:nth-child(2) {
+    animation-delay: 120ms;
+}
+
+.typing-indicator span:nth-child(3) {
+    animation-delay: 240ms;
+}
+
+.chat-input-area {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+}
+
+.records-layout,
+.about-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.chart-zone {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.chart-card {
+    padding: 22px;
+}
+
+.chart-card p {
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.chart-wrapper {
+    position: relative;
+    height: 260px;
+    margin-top: 16px;
+}
+
+.empty-chart {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: var(--muted);
+    text-align: center;
+}
+
+.entries-head {
+    margin-bottom: 16px;
+}
+
+.diaries-list {
+    display: grid;
+    gap: 12px;
+}
+
+.empty-state {
+    padding: 28px;
+    border: 1px dashed rgba(37,49,45,0.18);
+    border-radius: var(--radius-sm);
+    color: var(--muted);
+    text-align: center;
+    background: rgba(255,255,255,0.44);
+}
+
+.entry-item {
+    display: grid;
+    gap: 10px;
+    padding: 16px;
+    border: 1px solid rgba(37,49,45,0.1);
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.66);
+}
+
+.entry-item header {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 0.88rem;
+}
+
+.entry-item strong {
+    color: var(--ink);
+}
+
+.entry-snippet {
+    color: var(--ink);
+    line-height: 1.8;
+}
+
+.entry-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.entry-tags span {
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: rgba(71,124,107,0.1);
+    color: var(--moss-deep);
+    font-size: 0.75rem;
+    font-weight: 800;
+}
+
+.theory-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.theory-item {
+    padding: 16px;
+    border: 1px solid rgba(37,49,45,0.1);
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.62);
+}
+
+.theory-item h3 {
+    margin-bottom: 8px;
+}
+
+.theory-item p {
+    color: var(--muted);
+    font-size: 0.92rem;
+}
+
+.safety-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.boundary-card {
+    padding: 22px;
+}
+
+.boundary-card p,
+.about-lead p {
+    margin-top: 10px;
+    color: var(--muted);
+}
+
+.boundary-card a {
+    display: block;
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.68);
+    color: var(--danger);
+    font-weight: 900;
+    text-decoration: none;
+}
+
+.crisis::before {
+    background: var(--danger);
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 80;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(37,49,45,0.28);
+    backdrop-filter: blur(12px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms var(--ease);
+}
+
+.modal-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    width: min(520px, 100%);
+    padding: 26px;
+    transform: translateY(12px) scale(0.98);
+    transition: transform 220ms var(--ease);
+}
+
+.modal-overlay.show .modal-content {
+    transform: translateY(0) scale(1);
+}
+
+.close-btn {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.62);
+    cursor: pointer;
+    font-size: 1.4rem;
+}
+
+.form-group {
+    display: grid;
+    gap: 8px;
+    margin-top: 18px;
+}
+
+.form-hint {
+    color: var(--muted);
+    font-size: 0.84rem;
+}
+
+.form-hint a {
+    color: var(--moss-deep);
+    font-weight: 900;
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 22px;
+}
+
+.mood-modal p {
+    color: var(--muted);
+}
+
+.mood-selector {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 18px;
+}
+
+.mood-btn {
+    min-height: 74px;
+    border: 1px solid rgba(37,49,45,0.12);
+    border-radius: var(--radius-sm);
+    background: rgba(255,255,255,0.68);
+    cursor: pointer;
+    color: var(--ink);
+    font-weight: 900;
+}
+
+.mood-btn span {
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+
+.crisis-links {
+    display: grid;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.crisis-links a {
+    padding: 14px;
+    border-radius: var(--radius-sm);
+    color: #fffdf5;
+    background: var(--danger);
+    font-weight: 900;
+    text-decoration: none;
+}
+
+.toast {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 100;
+    max-width: min(420px, calc(100vw - 36px));
+    padding: 13px 16px;
+    border-radius: var(--radius-sm);
+    color: #fffdf5;
+    background: var(--ink);
+    box-shadow: var(--shadow);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: 220ms var(--ease);
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.capsule-card {
+    position: fixed;
+    left: -9999px;
+    top: -9999px;
+    width: 540px;
+    min-height: 680px;
+    padding: 54px;
+    border: 1px solid rgba(37,49,45,0.16);
+    background:
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(71,124,107,0.12) 31px 32px),
+        var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Serif SC', serif;
+}
+
+.capsule-card span {
+    color: var(--rose);
+    font-weight: 900;
+}
+
+.capsule-card p {
+    margin: 150px 0 120px;
+    font-size: 2rem;
+    line-height: 1.8;
+}
+
+.capsule-card small {
+    color: var(--muted);
+}
+
+body.zen-mode {
+    background: var(--paper);
+    overflow: hidden;
+}
+
+body.zen-mode .safety-strip,
+body.zen-mode .app-header,
+body.zen-mode .coach-column,
+body.zen-mode .module-tabs,
+body.zen-mode .writer-head .btn-outline {
+    display: none;
+}
+
+body.zen-mode #app-container {
+    position: fixed;
+    inset: 0;
+    z-index: 65;
+    display: grid;
+    place-items: center;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    margin: 0;
+    padding: 24px;
+    overflow: hidden;
+    transform: none;
+    background:
+        linear-gradient(90deg, var(--paper-line) 1px, transparent 1px) 0 0 / 28px 28px,
+        linear-gradient(180deg, rgba(255,255,255,0.78), rgba(241,238,228,0.94)),
+        var(--paper);
+}
+
+body.zen-mode .view {
+    display: none;
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+body.zen-mode .write-layout {
+    display: block;
+    width: min(980px, calc(100vw - 48px));
+    height: min(820px, calc(100dvh - 48px));
+    min-height: 0;
+    margin: 0 auto;
+    grid-template-columns: none;
+    gap: 0;
+}
+
+body.zen-mode #view-write.active {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    justify-content: initial;
+    opacity: 1;
+    pointer-events: auto;
+    transform: none;
+}
+
+body.zen-mode .writer-board {
+    display: grid;
+    grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+    gap: 12px;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    padding: 20px 22px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+body.zen-mode .writer-head p:last-child {
+    max-width: 760px;
+    margin-top: 5px;
+}
+
+body.zen-mode .step-progress {
+    margin: 2px 0;
+}
+
+body.zen-mode .writing-step {
+    grid-template-columns: minmax(190px, 0.34fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    min-height: 0;
+}
+
+body.zen-mode .question-card {
+    min-height: 0;
+}
+
+body.zen-mode #step-textarea {
+    height: 100%;
+    min-height: 0;
+    resize: none;
+}
+
+body.zen-mode .zen-exit-btn {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.zen-exit-btn {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 70;
+    opacity: 0;
+    pointer-events: none;
+}
+
+@keyframes panelRise {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes soundPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(92,112,157,0.22);
+    }
+    50% {
+        box-shadow: 0 0 0 5px rgba(92,112,157,0.08);
+    }
+}
+
+@keyframes riseIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes typingPulse {
+    0%, 100% {
+        opacity: 0.35;
+        transform: translateY(0);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(-3px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    body {
+        overflow-y: auto;
+    }
+
+    #app-container {
+        height: auto;
+        min-height: calc(100vh - 170px);
+    }
+
+    .view {
+        position: relative;
+        display: none;
+    }
+
+    .view.active {
+        display: flex;
+    }
+
+    .workbench-grid,
+    .write-layout,
+    .chart-zone,
+    .safety-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .module-grid,
+    .theory-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .coach-column {
+        grid-template-rows: auto auto;
+    }
+}
+
+@media (max-width: 720px) {
+    h1 {
+        font-size: clamp(1.62rem, 7.4vw, 1.95rem);
+        line-height: 1.22;
+        max-width: 100%;
+        word-break: normal;
+    }
+
+    .safety-strip {
+        flex-direction: column;
+        gap: 2px;
+        align-items: flex-start;
+        font-size: 0.78rem;
+    }
+
+    .app-header {
+        grid-template-columns: 1fr;
+        width: calc(100% - 20px);
+        margin-top: 10px;
+    }
+
+    .brand-mark {
+        align-items: flex-start;
+    }
+
+    .version-tag {
+        display: none;
+    }
+
+    .header-tools {
+        justify-content: stretch;
+        flex-wrap: wrap;
+    }
+
+    .header-tools .icon-button {
+        flex: 1 1 calc(25% - 8px);
+        min-width: 68px;
+    }
+
+    .custom-dropdown {
+        flex: 1 1 150px;
+    }
+
+    .dropdown-selected {
+        width: 100%;
+    }
+
+    .main-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #app-container {
+        width: calc(100% - 20px);
+        margin-bottom: 10px;
+    }
+
+    .thesis-panel,
+    .today-panel,
+    .records-top,
+    .entries-panel,
+    .about-lead,
+    .theory-map,
+    .writer-board,
+    .coach-card,
+    .chat-card,
+    .chart-card,
+    .boundary-card {
+        padding: 18px;
+    }
+
+    .evidence-row,
+    .mini-stats,
+    .record-metrics,
+    .module-grid,
+    .theory-list,
+    .writing-step,
+    .step-meta,
+    .step-input-row,
+    .mood-selector {
+        grid-template-columns: 1fr;
+    }
+
+    .panel-title-row,
+    .section-heading,
+    .writer-head,
+    .entries-head {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .step-progress {
+        gap: 5px;
+    }
+
+    #step-textarea {
+        min-height: 220px;
+    }
+
+    .writer-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .writer-actions button {
+        width: 100%;
+    }
+
+    .chat-card {
+        min-height: 360px;
+    }
+}
+
+</style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="safety-strip" id="top-banner">
+        <span>本工具用于日常情绪疏导与表达性写作练习，不替代专业心理咨询、诊断或治疗。</span>
+        <a href="tel:12356">心理援助热线 12356</a>
+    </div>
+
+    <header class="app-header" id="main-header">
+        <div class="brand-mark magnetic">
+            <span class="brand-seal">笺</span>
+            <div>
+                <strong>心绪笺</strong>
+                <span>先安心，再用心</span>
+            </div>
+            <span class="version-tag">评委演示版</span>
+        </div>
+
+        <div class="header-tools">
+            <div id="custom-persona-dropdown" class="custom-dropdown">
+                <button class="dropdown-selected" id="dropdown-trigger" type="button">
+                    <span id="selected-persona-text">温柔倾听</span>
+                    <span aria-hidden="true">▾</span>
+                </button>
+                <div class="dropdown-options">
+                    <button class="dropdown-option active" type="button" data-value="温柔倾听">温柔倾听</button>
+                    <button class="dropdown-option" type="button" data-value="冷静理性">冷静理性</button>
+                    <button class="dropdown-option" type="button" data-value="学习教练">学习教练</button>
+                    <button class="dropdown-option" type="button" data-value="叙事陪伴">叙事陪伴</button>
+                </div>
+            </div>
+
+            <button class="icon-button ambient-btn magnetic" data-sound="rain" type="button" title="播放雨声白噪音" aria-label="播放雨声白噪音">雨声</button>
+            <button class="icon-button ambient-btn magnetic" data-sound="waves" type="button" title="播放潮声白噪音" aria-label="播放潮声白噪音">潮声</button>
+            <button class="icon-button magnetic" id="btn-zen-mode" type="button" title="进入沉浸书写" aria-label="进入沉浸书写">沉浸</button>
+            <button class="icon-button magnetic" id="btn-settings" type="button" title="设置 AI 引擎" aria-label="设置 AI 引擎">设置</button>
+        </div>
+
+        <nav class="main-nav" aria-label="主要导航">
+            <button class="nav-btn active magnetic" type="button" data-target="view-workbench">工作台</button>
+            <button class="nav-btn magnetic" type="button" data-target="view-write">结构书写</button>
+            <button class="nav-btn magnetic" type="button" data-target="view-records">记录图谱</button>
+            <button class="nav-btn magnetic" type="button" data-target="view-about">项目说明</button>
+        </nav>
+    </header>
+
+    <button id="btn-exit-zen" class="zen-exit-btn btn-outline" type="button">退出沉浸</button>
+
+    <main id="app-container">
+        <section id="view-workbench" class="view active">
+            <div class="workbench-grid">
+                <section class="thesis-panel paper-panel">
+                    <p class="eyebrow">教育心理 × 表达性写作 × AI 引导</p>
+                    <h1><span>写下情绪，</span><span>回到行动。</span></h1>
+                    <p class="lead">从自由倾诉到结构化书写，心绪笺把项目书中的循证路径落成可点击、可记录、可回看的原型。</p>
+                    <div class="evidence-row">
+                        <div>
+                            <strong>4</strong>
+                            <span>循证模块</span>
+                        </div>
+                        <div>
+                            <strong>86%</strong>
+                            <span>调研中认可情绪影响学习</span>
+                        </div>
+                        <div>
+                            <strong>0</strong>
+                            <span>默认云端上传</span>
+                        </div>
+                    </div>
+                    <div class="thesis-actions">
+                        <button class="btn-primary magnetic" type="button" data-start-module="daily">开始一次轻量书写</button>
+                        <button class="btn-outline magnetic" type="button" data-target-view="view-records">查看演示数据</button>
+                    </div>
+                </section>
+
+                <aside class="today-panel paper-panel">
+                    <div class="panel-title-row">
+                        <div>
+                            <p class="eyebrow">今日状态</p>
+                            <h2>书写闭环</h2>
+                        </div>
+                        <span class="local-badge" id="local-mode-badge">本地演示可用</span>
+                    </div>
+                    <div class="loop-track">
+                        <span>情绪承接</span>
+                        <span>书写外化</span>
+                        <span>认知重构</span>
+                        <span>学习赋能</span>
+                    </div>
+                    <div class="mini-stats">
+                        <div>
+                            <span>累计书写</span>
+                            <strong id="stat-total-entries">0</strong>
+                        </div>
+                        <div>
+                            <span>连续打卡</span>
+                            <strong id="stat-streak-days">0</strong>
+                        </div>
+                        <div>
+                            <span>模块覆盖</span>
+                            <strong id="stat-coverage">0/4</strong>
+                        </div>
+                    </div>
+                    <button class="btn-secondary magnetic" type="button" id="btn-mood-pre">记录此刻心情</button>
+                </aside>
+            </div>
+
+            <section class="module-section">
+                <div class="section-heading">
+                    <p class="eyebrow">四大来源已落到原型</p>
+                    <h2>选择一个书写入口</h2>
+                </div>
+                <div class="module-grid" id="module-grid"></div>
+            </section>
+        </section>
+
+        <section id="view-write" class="view">
+            <div class="write-layout">
+                <section class="writer-board paper-panel">
+                    <div class="writer-head">
+                        <div>
+                            <p class="eyebrow" id="active-module-theory">表达性写作</p>
+                            <h2 id="active-module-title">经典书写</h2>
+                            <p id="active-module-desc">围绕一个困扰事件，完成从外化到重评的四步书写。</p>
+                        </div>
+                        <button class="btn-outline magnetic" type="button" id="btn-open-module-list">更换模块</button>
+                    </div>
+
+                    <div class="module-tabs" id="module-tabs"></div>
+                    <div class="step-progress" id="step-progress"></div>
+
+                    <div class="writing-step">
+                        <div class="question-card">
+                            <span id="step-kicker">第 1 步</span>
+                            <h3 id="step-title">客观经过</h3>
+                            <p id="step-prompt">先把事情发生了什么写下来，不急着评价自己。</p>
+                        </div>
+                        <textarea id="step-textarea" rows="9" placeholder="先写下真实感受，不必追求标准答案。"></textarea>
+                        <div class="step-meta">
+                            <label>
+                                书写前心情
+                                <select id="mood-before-select"></select>
+                            </label>
+                            <label>
+                                书写后心情
+                                <select id="mood-after-select"></select>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="learning-close">
+                        <label for="learning-step-input">如果情绪松动了一点，给学习留下一小步</label>
+                        <div class="step-input-row">
+                            <input type="text" id="learning-step-input" placeholder="例如：只看 5 页书、把论文题目列出来">
+                            <button id="btn-export-capsule" class="btn-outline magnetic" type="button">导出笺卡</button>
+                        </div>
+                    </div>
+
+                    <div class="writer-actions">
+                        <button class="btn-outline magnetic" type="button" id="btn-prev-step">上一步</button>
+                        <button class="btn-secondary magnetic" type="button" id="btn-ai-coach">生成引导</button>
+                        <button class="btn-primary magnetic" type="button" id="btn-next-step">下一步</button>
+                        <button class="btn-primary magnetic" type="button" id="btn-save-entry">保存记录</button>
+                    </div>
+                </section>
+
+                <aside class="coach-column">
+                    <section class="coach-card paper-panel">
+                        <p class="eyebrow">AI / 本地双模式</p>
+                        <h3>引导提示</h3>
+                        <div id="coach-output" class="coach-output">选择模块后，我会按该模块的理论框架给出开放式追问。未配置 API 时，本地演示也能完整走通。</div>
+                    </section>
+
+                    <section class="chat-card paper-panel">
+                        <div class="panel-title-row">
+                            <div>
+                                <p class="eyebrow">自由树洞</p>
+                                <h3>需要先倾诉也可以</h3>
+                            </div>
+                            <span id="ai-status-pill" class="local-badge">本地回应</span>
+                        </div>
+                        <div class="chat-history" id="chat-history">
+                            <div class="typing-indicator" id="typing-indicator">
+                                <span></span><span></span><span></span>
+                            </div>
+                        </div>
+                        <div class="chat-input-area" id="chat-input-area">
+                            <textarea id="chat-input" placeholder="写下你的感受，按 Enter 发送" rows="2"></textarea>
+                            <button id="btn-send" class="icon-button send-button magnetic" type="button" title="发送" aria-label="发送">发</button>
+                        </div>
+                    </section>
+                </aside>
+            </div>
+        </section>
+
+        <section id="view-records" class="view">
+            <div class="records-layout">
+                <section class="records-top paper-panel">
+                    <div class="section-heading">
+                        <p class="eyebrow">动态情绪图谱</p>
+                        <h2>从书写记录看见变化</h2>
+                    </div>
+                    <div class="record-metrics">
+                        <div><span>书写次数</span><strong id="metric-entry-count">0</strong></div>
+                        <div><span>平均心情提升</span><strong id="metric-mood-delta">0</strong></div>
+                        <div><span>覆盖模块</span><strong id="metric-module-count">0</strong></div>
+                        <div><span>最近一次</span><strong id="metric-last-date">无</strong></div>
+                    </div>
+                </section>
+
+                <section class="chart-zone">
+                    <div class="chart-card paper-panel">
+                        <h3>心情趋势</h3>
+                        <p>自我观察参考，不作诊断。</p>
+                        <div class="chart-wrapper">
+                            <canvas id="moodChart"></canvas>
+                            <div class="empty-chart" id="moodChartEmpty">保存一次书写后显示趋势。</div>
+                        </div>
+                    </div>
+                    <div class="chart-card paper-panel">
+                        <h3>情绪雷达</h3>
+                        <p>依据最近一次书写或 AI 回复生成。</p>
+                        <div class="chart-wrapper">
+                            <canvas id="radarChart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="entries-panel paper-panel">
+                    <div class="entries-head">
+                        <div>
+                            <p class="eyebrow">本地保存</p>
+                            <h2>书写记录</h2>
+                        </div>
+                        <div class="filter-row" id="filter-row"></div>
+                    </div>
+                    <div class="diaries-list" id="diaries-list"></div>
+                    <div class="entry-actions">
+                        <button id="btn-clear-data" class="btn-outline danger-button magnetic" type="button">清空本地数据</button>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <section id="view-about" class="view">
+            <div class="about-layout">
+                <section class="about-lead paper-panel">
+                    <p class="eyebrow">项目定位</p>
+                    <h2>高校心理健康服务的前端入口与日常补充。</h2>
+                    <p>心绪笺聚焦大学生学业情绪，把“情绪调节先于认知投入”的教育心理逻辑转化为可演示的产品流程。</p>
+                </section>
+
+                <section class="theory-map paper-panel">
+                    <p class="eyebrow">四大理论来源</p>
+                    <div id="theory-list" class="theory-list"></div>
+                </section>
+
+                <section class="safety-grid">
+                    <div class="boundary-card paper-panel">
+                        <h3>伦理边界</h3>
+                        <p>非诊断、仅引导、不替代专业咨询。高风险表达会强制触发求助引导，停止普通陪伴流程。</p>
+                    </div>
+                    <div class="boundary-card crisis paper-panel">
+                        <h3>求助资源</h3>
+                        <a href="tel:12356">全国心理援助热线 12356</a>
+                        <a href="tel:110">紧急求助 110 / 120</a>
+                    </div>
+                    <div class="boundary-card paper-panel">
+                        <h3>隐私策略</h3>
+                        <p>演示版默认保存在本机浏览器 localStorage，不向云端上传；用户可一键清空。</p>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <div id="healing-capsule-card" class="capsule-card" aria-hidden="true">
+        <span>心绪笺</span>
+        <p id="capsule-text">今天的一小步</p>
+        <small>先安心，再用心</small>
+    </div>
+
+    <div id="modal-settings" class="modal-overlay">
+        <div class="modal-content paper-panel">
+            <div class="modal-header">
+                <h3>设置 AI 引擎</h3>
+                <button class="close-btn magnetic" type="button" data-close="modal-settings">×</button>
+            </div>
+            <div class="form-group">
+                <label for="api-url">API 接口地址</label>
+                <input type="text" id="api-url" class="form-input" value="https://api.deepseek.com/v1/chat/completions">
+            </div>
+            <div class="form-group">
+                <label for="api-model">模型名称</label>
+                <input type="text" id="api-model" class="form-input" value="deepseek-chat">
+            </div>
+            <div class="form-group">
+                <label for="api-key">API 密钥</label>
+                <input type="password" id="api-key" class="form-input" placeholder="未填写时使用本地演示引导">
+                <span class="form-hint">密钥仅保存在本机浏览器，用于演示 AI 增强回复。不会填写？<a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">前往 DeepSeek 获取密钥</a></span>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-save-settings" class="btn-primary magnetic" type="button">保存设置</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-mood" class="modal-overlay">
+        <div class="modal-content paper-panel mood-modal">
+            <div class="modal-header">
+                <h3>感受此刻</h3>
+                <button class="close-btn magnetic" type="button" data-close="modal-mood">×</button>
+            </div>
+            <p>请选择当前心情评分，系统会把它作为自我观察记录。</p>
+            <div class="mood-selector">
+                <button class="mood-btn magnetic" type="button" data-score="1">1<br><span>很低落</span></button>
+                <button class="mood-btn magnetic" type="button" data-score="2">2<br><span>有压力</span></button>
+                <button class="mood-btn magnetic" type="button" data-score="3">3<br><span>平静</span></button>
+                <button class="mood-btn magnetic" type="button" data-score="4">4<br><span>放松</span></button>
+                <button class="mood-btn magnetic" type="button" data-score="5">5<br><span>不错</span></button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-crisis" class="modal-overlay crisis-modal">
+        <div class="modal-content paper-panel">
+            <div class="modal-header">
+                <h3>请立刻联系真实的人</h3>
+            </div>
+            <p id="crisis-message">我很担心你现在的状态。请马上联系身边可信任的人，或拨打专业求助电话。</p>
+            <div class="crisis-links">
+                <a href="tel:12356">全国心理援助热线：12356</a>
+                <a href="tel:110">紧急求助：110 / 120</a>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary danger-fill magnetic" id="btn-understand-crisis" type="button">我知道了，我会去求助</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast" role="status"></div>
+    <script>
+const MODULES = [
+    {
+        id: 'classic',
+        index: '01',
+        title: '经典书写',
+        shortTitle: '经典',
+        source: '彭尼贝克表达性写作',
+        theory: '围绕同一困扰事件分阶段书写，帮助情绪外化并完成认知整合。',
+        scenario: '考试失利、关系变故、重大挫折',
+        time: '15-20 分钟',
+        color: '#477c6b',
+        tags: ['表达性写作', '事件外化', '重评成长'],
+        steps: [
+            { title: '客观经过', prompt: '把事情发生了什么写下来，只描述事实，不急着评价自己。', guide: '可以按“时间、地点、人物、发生了什么”来写。先让事件从脑子里落到纸面上。' },
+            { title: '情绪感受', prompt: '这件事让你最强烈的感受是什么？身体和心里分别有什么反应？', guide: '试着写出具体词语，比如委屈、慌、空、羞愧、愤怒，而不是只写“难受”。' },
+            { title: '深层影响', prompt: '它触碰了你怎样的担心、期待或自我评价？', guide: '可以用“我真正害怕的是……”开头。这里不需要证明自己，只需要看见自己。' },
+            { title: '重评成长', prompt: '如果把这件事看作一段经历，它可能提醒你接下来怎样照顾自己？', guide: '写一个更温和、更现实的解释，再写一个今天就能做的小动作。' }
+        ]
+    },
+    {
+        id: 'daily',
+        index: '02',
+        title: '日常情绪书写',
+        shortTitle: '日常',
+        source: '积极心理学与正念觉察',
+        theory: '用短时书写承接高频、轻度的情绪困扰，降低表达门槛，帮助用户养成稳定的书写习惯。',
+        scenario: '烦躁、拖延、轻度焦虑、疲惫',
+        time: '5-8 分钟',
+        color: '#d8a64b',
+        tags: ['轻量减压', '感恩三件事', '情绪拆解'],
+        steps: [
+            { title: '此刻天气', prompt: '如果把现在的心情比作天气，它是什么样的？', guide: '天气不需要被纠正，它只是说明此刻的状态。先给它一个名字。' },
+            { title: '烦躁拆解', prompt: '今天最消耗你的一个小点是什么？它为什么卡住了你？', guide: '把“大压力”拆成一个具体场景，通常就更容易处理。' },
+            { title: '可用资源', prompt: '今天有没有一个让你稍微稳住的细节？', guide: '可以是一句话、一杯水、一次短暂休息，或一个已经完成的小任务。越具体越好。' },
+            { title: '微小照顾', prompt: '接下来 20 分钟，你能给自己一个怎样的照顾或调整？', guide: '答案要小到真的能做。比如站起来喝水、只整理一道题、给朋友发一句话。' }
+        ]
+    },
+    {
+        id: 'cbt',
+        index: '03',
+        title: 'CBT 认知改写',
+        shortTitle: 'CBT',
+        source: '认知行为疗法 ABCDE',
+        theory: '识别自动思维与灾难化解释，通过辩驳和重构减轻学业内耗。',
+        scenario: '学业焦虑、自我否定、灾难化思维',
+        time: '12-15 分钟',
+        color: '#5c709d',
+        tags: ['ABCDE', '认知重评', '学业焦虑'],
+        steps: [
+            { title: 'A 诱发事件', prompt: '最近让你焦虑或受挫的具体事件是什么？', guide: '只写一个事件，不要把所有问题都压进来。' },
+            { title: 'B 自动想法', prompt: '事件发生后，你脑中第一时间冒出的想法是什么？', guide: '常见自动想法包括“我完了”“我肯定不行”“别人都比我好”。' },
+            { title: 'D 温和辩驳', prompt: '有没有证据说明这个想法并不完全准确？如果朋友这样想，你会怎么劝他？', guide: '辩驳不是硬夸自己，而是把“绝对化”改成“更完整”。' },
+            { title: 'E 理性重构', prompt: '请写一个更现实、更能帮助你行动的新想法。', guide: '有帮助的重构通常包含事实、余地和下一步。比如“这次没做好，但我能先补最薄弱的一块”。' }
+        ]
+    },
+    {
+        id: 'narrative',
+        index: '04',
+        title: '成长叙事',
+        shortTitle: '叙事',
+        source: '叙事疗法与意义建构',
+        theory: '把困境放回个人成长故事中，重写自我理解，提取稳定的意义感。',
+        scenario: '长期迷茫、自我认同、人际复盘',
+        time: '18-25 分钟',
+        color: '#a45f64',
+        tags: ['自我同一性', '意义提取', '长期成长'],
+        steps: [
+            { title: '故事开端', prompt: '如果把最近的自己写成一段故事，开头会是什么？', guide: '不用写得漂亮，像给未来的自己留一页真实手稿。' },
+            { title: '困境角色', prompt: '这段故事里的“困难”像什么角色？它怎样影响你？', guide: '把困难外化成一个角色，有助于把“我很糟”改成“我正在面对某个东西”。' },
+            { title: '例外时刻', prompt: '有没有哪一刻，你没有完全被困难控制住？你做对了什么？', guide: '哪怕只是一分钟的坚持，也说明你身上有可调用的力量。' },
+            { title: '下一章标题', prompt: '给接下来一周的自己拟一个章节标题，并写下你愿意带走的一句话。', guide: '标题不用宏大，只要能让你记得自己正在往前走。' }
+        ]
+    }
+];
+
+const PERSONAS = {
+    '温柔倾听': '温暖、真诚、共情、不评判。先承接情绪，再邀请用户书写。',
+    '冷静理性': '客观、清楚、重视事实和行动。帮助用户区分事件、想法与选择。',
+    '学习教练': '关注学业情绪与学习投入的迁移。每次回应都落到一个可执行的小步。',
+    '叙事陪伴': '重视故事、意义与自我理解。帮助用户看见经历中的线索和力量。'
+};
+
+const CRISIS_MESSAGES = {
+    self_harm: '我很担心你正在承受强烈的痛苦。请现在立刻联系身边可信任的人，或拨打全国心理援助热线 12356；如果有即时危险，请拨打 110 / 120。',
+    violence: '我注意到内容里出现了可能伤害自己或他人的高风险信号。请立刻离开危险物品和冲突现场，联系辅导员、保卫处或拨打 110 / 120。',
+    psychiatric: '如果你感到失控、被监视、听到指令或难以分辨现实，请尽快前往三甲医院精神专科或联系学校心理中心。寻求专业帮助是保护自己的勇敢行为。'
+};
+
+const CRISIS_DICT = {
+    self_harm: ['自杀', '不想活', '结束生命', '跳楼', '割腕', '吃安眠药', '寻死', '一了百了', '活不下去'],
+    violence: ['杀了', '弄死', '同归于尽', '报复社会', '带刀去学校', '炸学校', '伤害他们'],
+    psychiatric: ['有人监视', '脑子里有指令', '控制不住想杀', '幻听', '彻底发疯']
+};
+
+let currentPersona = '温柔倾听';
+let apiConfig = { url: 'https://api.deepseek.com/v1/chat/completions', model: 'deepseek-chat', key: '' };
+let chatHistory = [];
+let moduleEntries = [];
+let moduleDrafts = {};
+let currentFilter = 'all';
+let activeDraft = null;
+let chartInstance = null;
+let radarInstance = null;
+let audioContext = null;
+let currentNoise = null;
+let currentLfo = null;
+
+const els = {};
+const typingHtml = '<div class="typing-indicator" id="typing-indicator"><span></span><span></span><span></span></div>';
+
+function $(id) {
+    return document.getElementById(id);
+}
+
+function init() {
+    cacheElements();
+    loadData();
+    renderModules();
+    renderTheoryList();
+    renderModuleTabs();
+    renderFilterRow();
+    renderWritingFlow();
+    renderChat();
+    renderAllRecords();
+    updateAiStatus();
+    setupEventListeners();
+    setupMagnetic();
+    maybePromptSettings();
+}
+
+function cacheElements() {
+    [
+        'module-grid', 'module-tabs', 'filter-row', 'theory-list', 'chat-history',
+        'chat-input', 'btn-send', 'typing-indicator', 'step-progress',
+        'active-module-theory', 'active-module-title', 'active-module-desc',
+        'step-kicker', 'step-title', 'step-prompt', 'step-textarea',
+        'mood-before-select', 'mood-after-select', 'learning-step-input',
+        'coach-output', 'diaries-list', 'toast', 'local-mode-badge',
+        'ai-status-pill', 'capsule-text'
+    ].forEach(id => { els[toCamel(id)] = $(id); });
+}
+
+function toCamel(id) {
+    return id.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+}
+
+function loadData() {
+    apiConfig = readJson('wt_apiConfig', apiConfig);
+    chatHistory = readJson('wt_chatHistory', []);
+    moduleEntries = readJson('wt_moduleEntries', []);
+    moduleDrafts = readJson('wt_moduleDrafts', {});
+    activeDraft = readJson('wt_activeDraft', null);
+
+    if (!activeDraft || !getModule(activeDraft.moduleId)) {
+        activeDraft = createDraft('daily');
+    }
+
+    if (!chatHistory.length) {
+        chatHistory = [{
+            role: 'assistant',
+            content: '你好，我是心绪笺。你可以先自由倾诉，也可以从四个书写模块开始。这里不会评价你，只会陪你把情绪放稳，再找到学习上的一小步。',
+            timestamp: Date.now(),
+            emotion: [2, 2, 3, 3, 3]
+        }];
+    }
+
+    const apiUrl = $('api-url');
+    const apiModel = $('api-model');
+    const apiKey = $('api-key');
+    if (apiUrl) apiUrl.value = apiConfig.url || '';
+    if (apiModel) apiModel.value = apiConfig.model || '';
+    if (apiKey) apiKey.value = apiConfig.key || '';
+}
+
+function readJson(key, fallback) {
+    try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+    } catch (error) {
+        return fallback;
+    }
+}
+
+function writeJson(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+}
+
+function saveData() {
+    writeJson('wt_apiConfig', apiConfig);
+    writeJson('wt_chatHistory', chatHistory);
+    writeJson('wt_moduleEntries', moduleEntries);
+    writeJson('wt_moduleDrafts', moduleDrafts);
+    writeJson('wt_activeDraft', activeDraft);
+}
+
+function createDraft(moduleId) {
+    const module = getModule(moduleId) || MODULES[0];
+    return {
+        moduleId: module.id,
+        stepIndex: 0,
+        steps: module.steps.map(() => ''),
+        moodBefore: '3',
+        moodAfter: '3',
+        learningStep: '',
+        updatedAt: Date.now()
+    };
+}
+
+function getModule(moduleId) {
+    return MODULES.find(module => module.id === moduleId);
+}
+
+function setupEventListeners() {
+    document.querySelectorAll('.nav-btn[data-target]').forEach(btn => {
+        btn.addEventListener('click', () => switchView(btn.dataset.target));
+    });
+
+    document.querySelectorAll('[data-target-view]').forEach(btn => {
+        btn.addEventListener('click', () => switchView(btn.dataset.targetView));
+    });
+
+    document.body.addEventListener('click', event => {
+        const startBtn = event.target.closest('[data-start-module]');
+        if (startBtn) startModule(startBtn.dataset.startModule);
+    });
+
+    els.moduleTabs.addEventListener('click', event => {
+        const tab = event.target.closest('[data-module-tab]');
+        if (tab) startModule(tab.dataset.moduleTab, true);
+    });
+
+    els.filterRow.addEventListener('click', event => {
+        const chip = event.target.closest('[data-filter]');
+        if (!chip) return;
+        currentFilter = chip.dataset.filter;
+        renderFilterRow();
+        renderEntriesList();
+    });
+
+    $('btn-open-module-list').addEventListener('click', () => switchView('view-workbench'));
+    $('btn-prev-step').addEventListener('click', prevStep);
+    $('btn-next-step').addEventListener('click', nextStep);
+    $('btn-save-entry').addEventListener('click', saveModuleEntry);
+    $('btn-ai-coach').addEventListener('click', generateModuleCoach);
+    $('btn-export-capsule').addEventListener('click', exportCapsule);
+
+    els.stepTextarea.addEventListener('input', () => {
+        activeDraft.steps[activeDraft.stepIndex] = els.stepTextarea.value;
+        activeDraft.updatedAt = Date.now();
+        saveData();
+        $('btn-save-entry').style.display = activeDraft.steps.some(step => (step || '').trim()) ? 'inline-flex' : 'none';
+    });
+
+    els.moodBeforeSelect.addEventListener('change', () => {
+        activeDraft.moodBefore = els.moodBeforeSelect.value;
+        saveData();
+    });
+
+    els.moodAfterSelect.addEventListener('change', () => {
+        activeDraft.moodAfter = els.moodAfterSelect.value;
+        saveData();
+    });
+
+    els.learningStepInput.addEventListener('input', () => {
+        activeDraft.learningStep = els.learningStepInput.value;
+        saveData();
+    });
+
+    $('btn-settings').addEventListener('click', () => openModal('modal-settings'));
+    $('btn-save-settings').addEventListener('click', saveSettings);
+    document.querySelectorAll('[data-close]').forEach(btn => {
+        btn.addEventListener('click', () => closeModal(btn.dataset.close));
+    });
+
+    $('btn-mood-pre').addEventListener('click', () => openModal('modal-mood'));
+    document.querySelectorAll('.mood-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            saveMood(Number(btn.dataset.score), 'manual');
+            closeModal('modal-mood');
+            showToast(`已记录此刻心情：${btn.dataset.score} 分`);
+            renderAllRecords();
+        });
+    });
+
+    $('btn-understand-crisis').addEventListener('click', () => closeModal('modal-crisis'));
+    $('btn-clear-data').addEventListener('click', clearLocalData);
+    $('btn-zen-mode').addEventListener('click', () => {
+        switchView('view-write');
+        document.body.classList.add('zen-mode');
+    });
+    $('btn-exit-zen').addEventListener('click', () => document.body.classList.remove('zen-mode'));
+
+    document.querySelectorAll('.ambient-btn[data-sound]').forEach(btn => {
+        btn.addEventListener('click', () => toggleAmbient(btn));
+    });
+
+    setupDropdown();
+    els.btnSend.addEventListener('click', handleSend);
+    els.chatInput.addEventListener('keydown', event => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            handleSend();
+        }
+    });
+
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+            document.querySelectorAll('.modal-overlay.show').forEach(modal => closeModal(modal.id));
+        }
+    });
+}
+
+function setupDropdown() {
+    const dropdown = $('custom-persona-dropdown');
+    const trigger = $('dropdown-trigger');
+    const label = $('selected-persona-text');
+    trigger.addEventListener('click', event => {
+        event.stopPropagation();
+        dropdown.classList.toggle('open');
+    });
+    dropdown.querySelectorAll('.dropdown-option').forEach(option => {
+        option.addEventListener('click', event => {
+            dropdown.querySelectorAll('.dropdown-option').forEach(item => item.classList.remove('active'));
+            option.classList.add('active');
+            currentPersona = option.dataset.value;
+            label.textContent = currentPersona;
+            dropdown.classList.remove('open');
+            appendSystemMessage(`AI 陪伴模式已切换至：${currentPersona}`);
+            event.stopPropagation();
+        });
+    });
+    document.addEventListener('click', () => dropdown.classList.remove('open'));
+}
+
+function setupMagnetic() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.querySelectorAll('.magnetic').forEach(el => {
+        el.addEventListener('mousemove', event => {
+            const rect = el.getBoundingClientRect();
+            const x = event.clientX - rect.left - rect.width / 2;
+            const y = event.clientY - rect.top - rect.height / 2;
+            el.style.transform = `translate(${x * 0.08}px, ${y * 0.08}px)`;
+        });
+        el.addEventListener('mouseleave', () => {
+            el.style.transform = '';
+        });
+    });
+}
+
+function renderModules() {
+    els.moduleGrid.innerHTML = MODULES.map(module => `
+        <article class="module-card paper-panel" style="--module-color:${module.color}" data-index="${module.index}">
+            <p class="eyebrow">${escapeHTML(module.source)}</p>
+            <h3>${escapeHTML(module.title)}</h3>
+            <p>${escapeHTML(module.theory)}</p>
+            <div class="module-tags">
+                <span>${escapeHTML(module.time)}</span>
+                <span>${escapeHTML(module.scenario)}</span>
+            </div>
+            <button class="btn-primary magnetic" type="button" data-start-module="${module.id}">进入模块</button>
+        </article>
+    `).join('');
+}
+
+function renderTheoryList() {
+    els.theoryList.innerHTML = MODULES.map(module => `
+        <article class="theory-item" style="--module-color:${module.color}">
+            <h3>${escapeHTML(module.title)}</h3>
+            <p><strong>${escapeHTML(module.source)}</strong></p>
+            <p>${escapeHTML(module.theory)}</p>
+        </article>
+    `).join('');
+}
+
+function renderModuleTabs() {
+    els.moduleTabs.innerHTML = MODULES.map(module => `
+        <button class="module-tab ${activeDraft.moduleId === module.id ? 'active' : ''}" type="button" data-module-tab="${module.id}">
+            ${escapeHTML(module.shortTitle)}
+        </button>
+    `).join('');
+}
+
+function renderFilterRow() {
+    const filters = [{ id: 'all', title: '全部' }, ...MODULES.map(module => ({ id: module.id, title: module.shortTitle }))];
+    els.filterRow.innerHTML = filters.map(filter => `
+        <button class="filter-chip ${currentFilter === filter.id ? 'active' : ''}" type="button" data-filter="${filter.id}">
+            ${escapeHTML(filter.title)}
+        </button>
+    `).join('');
+}
+
+function startModule(moduleId, silent = false) {
+    const module = getModule(moduleId);
+    if (!module) return;
+    persistCurrentDraft();
+    const restored = moduleDrafts[module.id];
+    activeDraft = restored && getModule(restored.moduleId) ? restored : createDraft(module.id);
+    saveData();
+    renderWritingFlow();
+    switchView('view-write');
+    if (!silent) showToast(restored ? `已继续「${module.title}」草稿。` : `已进入「${module.title}」。`);
+}
+
+function persistCurrentDraft() {
+    if (!activeDraft || !getModule(activeDraft.moduleId)) return;
+    if (hasDraftContent(activeDraft)) {
+        moduleDrafts[activeDraft.moduleId] = activeDraft;
+    }
+}
+
+function hasDraftContent(draft) {
+    return Boolean(
+        draft.steps?.some(step => (step || '').trim()) ||
+        (draft.learningStep || '').trim()
+    );
+}
+
+function renderWritingFlow() {
+    const module = getModule(activeDraft.moduleId) || MODULES[0];
+    const step = module.steps[activeDraft.stepIndex];
+    document.documentElement.style.setProperty('--module-color', module.color);
+    $('view-write').style.setProperty('--module-color', module.color);
+    els.activeModuleTheory.textContent = `${module.source} · ${module.time}`;
+    els.activeModuleTitle.textContent = module.title;
+    els.activeModuleDesc.textContent = `${module.theory} 适用于：${module.scenario}。`;
+    els.stepKicker.textContent = `第 ${activeDraft.stepIndex + 1} 步 / 共 ${module.steps.length} 步`;
+    els.stepTitle.textContent = step.title;
+    els.stepPrompt.textContent = step.prompt;
+    els.stepTextarea.value = activeDraft.steps[activeDraft.stepIndex] || '';
+    els.learningStepInput.value = activeDraft.learningStep || '';
+    renderMoodSelects();
+    renderModuleTabs();
+    renderStepProgress(module);
+    $('btn-prev-step').disabled = activeDraft.stepIndex === 0;
+    $('btn-next-step').textContent = activeDraft.stepIndex === module.steps.length - 1 ? '完成四步' : '下一步';
+    $('btn-save-entry').style.display = activeDraft.steps.some(step => (step || '').trim()) ? 'inline-flex' : 'none';
+    els.coachOutput.textContent = step.guide;
+}
+
+function renderMoodSelects() {
+    const options = [
+        ['1', '1 分 很低落'],
+        ['2', '2 分 有压力'],
+        ['3', '3 分 平静'],
+        ['4', '4 分 放松'],
+        ['5', '5 分 不错']
+    ].map(([value, label]) => `<option value="${value}">${label}</option>`).join('');
+    els.moodBeforeSelect.innerHTML = options;
+    els.moodAfterSelect.innerHTML = options;
+    els.moodBeforeSelect.value = activeDraft.moodBefore || '3';
+    els.moodAfterSelect.value = activeDraft.moodAfter || '3';
+}
+
+function renderStepProgress(module) {
+    els.stepProgress.innerHTML = module.steps.map((_, index) => {
+        const state = index < activeDraft.stepIndex ? 'done' : index === activeDraft.stepIndex ? 'active' : '';
+        return `<div class="step-dot ${state}"><span></span></div>`;
+    }).join('');
+}
+
+function prevStep() {
+    if (activeDraft.stepIndex === 0) return;
+    activeDraft.stepIndex -= 1;
+    saveData();
+    renderWritingFlow();
+}
+
+function nextStep() {
+    const module = getModule(activeDraft.moduleId);
+    if (activeDraft.stepIndex < module.steps.length - 1) {
+        activeDraft.stepIndex += 1;
+        saveData();
+        renderWritingFlow();
+        return;
+    }
+    saveModuleEntry();
+}
+
+function saveModuleEntry() {
+    const module = getModule(activeDraft.moduleId);
+    const cleanedSteps = activeDraft.steps.map(step => (step || '').trim());
+    if (!cleanedSteps.some(Boolean)) {
+        showToast('请先写下一点内容，再保存记录。');
+        return;
+    }
+
+    const fullText = cleanedSteps.join('\n');
+    const crisisType = checkCrisis(fullText);
+    if (crisisType) {
+        triggerCrisis(crisisType);
+        return;
+    }
+
+    const entry = {
+        id: `entry-${Date.now()}`,
+        moduleId: module.id,
+        moduleTitle: module.title,
+        steps: module.steps.map((step, index) => ({
+            title: step.title,
+            prompt: step.prompt,
+            content: cleanedSteps[index] || ''
+        })),
+        moodBefore: Number(activeDraft.moodBefore || 3),
+        moodAfter: Number(activeDraft.moodAfter || activeDraft.moodBefore || 3),
+        emotionScores: deriveEmotionScores(fullText, Number(activeDraft.moodAfter || 3)),
+        learningStep: (activeDraft.learningStep || '').trim(),
+        timestamp: Date.now()
+    };
+
+    moduleEntries.push(entry);
+    delete moduleDrafts[module.id];
+    saveMood(entry.moodBefore, `${module.id}:before`);
+    saveMood(entry.moodAfter, `${module.id}:after`);
+    saveDiary(`[${module.title}] ${firstNonEmpty(cleanedSteps)}${entry.learningStep ? `\n学习一小步：${entry.learningStep}` : ''}`);
+    activeDraft = createDraft(module.id);
+    saveData();
+    renderWritingFlow();
+    renderAllRecords();
+    els.coachOutput.textContent = `已保存「${module.title}」。这条记录会出现在记录图谱里，并参与模块覆盖度与心情趋势统计。`;
+    showToast('书写记录已保存。');
+}
+
+function firstNonEmpty(items) {
+    return items.find(Boolean) || '';
+}
+
+function saveMood(score, source) {
+    const moods = readJson('wt_moods', []);
+    moods.push({ score: Number(score), source, timestamp: Date.now() });
+    writeJson('wt_moods', moods);
+}
+
+function saveDiary(content) {
+    const diaries = readJson('wt_diaries', []);
+    diaries.push({ content, timestamp: Date.now() });
+    writeJson('wt_diaries', diaries);
+}
+
+async function generateModuleCoach() {
+    const module = getModule(activeDraft.moduleId);
+    const step = module.steps[activeDraft.stepIndex];
+    const currentText = (activeDraft.steps[activeDraft.stepIndex] || '').trim();
+    const allText = activeDraft.steps.join('\n');
+    const crisisType = checkCrisis(allText);
+    if (crisisType) {
+        triggerCrisis(crisisType);
+        return;
+    }
+
+    if (!apiConfig.key) {
+        els.coachOutput.textContent = buildLocalModuleGuide(module, step, currentText);
+        showToast('当前使用本地引导。');
+        return;
+    }
+
+    els.coachOutput.textContent = '正在根据当前书写生成个性化追问...';
+    try {
+        const messages = [
+            { role: 'system', content: buildSystemPrompt(currentPersona) },
+            { role: 'user', content: `当前模块：${module.title}。理论来源：${module.source}。当前步骤：${step.title}。步骤提示：${step.prompt}。用户目前写下：${currentText || '尚未书写'}。请给出不超过 120 字的温和追问，不诊断，不下结论，引导用户继续书写。` }
+        ];
+        const reply = await requestAI(messages, 380);
+        els.coachOutput.textContent = stripEmotionScore(reply).text || buildLocalModuleGuide(module, step, currentText);
+    } catch (error) {
+        els.coachOutput.textContent = buildLocalModuleGuide(module, step, currentText);
+        showToast('AI 请求失败，已切回本地引导。');
+    }
+}
+
+function buildLocalModuleGuide(module, step, currentText) {
+    if (!currentText) {
+        return `${step.guide}\n\n可以先写一句最短的开头：现在困住我的是……`;
+    }
+    const lengthHint = currentText.length < 35
+        ? '你已经开了个头。可以再补一层：这件事最影响你的哪一部分？'
+        : '你已经写得比较具体了。接下来可以补一个画面、一个身体感受，或一个你真正需要的支持。';
+    return `${step.guide}\n\n${lengthHint}`;
+}
+
+function switchView(targetId) {
+    document.querySelectorAll('.view').forEach(view => view.classList.remove('active'));
+    document.querySelectorAll('.nav-btn[data-target]').forEach(btn => btn.classList.toggle('active', btn.dataset.target === targetId));
+    const target = $(targetId);
+    if (target) target.classList.add('active');
+    if (targetId === 'view-records') renderAllRecords();
+    if (targetId === 'view-write') renderWritingFlow();
+}
+
+function openModal(id) {
+    const modal = $(id);
+    if (modal) modal.classList.add('show');
+}
+
+function closeModal(id) {
+    const modal = $(id);
+    if (modal) modal.classList.remove('show');
+}
+
+function maybePromptSettings() {
+    if (apiConfig.key || localStorage.getItem('wt_settings_prompt_seen')) return;
+    window.setTimeout(() => {
+        openModal('modal-settings');
+        localStorage.setItem('wt_settings_prompt_seen', 'true');
+    }, 650);
+}
+
+function saveSettings() {
+    apiConfig = {
+        url: $('api-url').value.trim() || 'https://api.deepseek.com/v1/chat/completions',
+        model: $('api-model').value.trim() || 'deepseek-chat',
+        key: $('api-key').value.trim()
+    };
+    localStorage.setItem('wt_settings_prompt_seen', 'true');
+    saveData();
+    updateAiStatus();
+    closeModal('modal-settings');
+    showToast(apiConfig.key ? 'AI 增强已启用。' : '已保存。未填写密钥时，系统会继续使用本地引导。');
+}
+
+function updateAiStatus() {
+    const text = apiConfig.key ? 'AI 增强' : '本地回应';
+    if (els.aiStatusPill) els.aiStatusPill.textContent = text;
+    if (els.localModeBadge) els.localModeBadge.textContent = apiConfig.key ? 'AI 增强已配置' : '本地演示可用';
+}
+
+function buildSystemPrompt(personaKey) {
+    const persona = PERSONAS[personaKey] || PERSONAS['温柔倾听'];
+    return `你是「心绪笺」，面向大学生学业情绪的 AI 写作引导助手。风格：${persona}
+边界：非诊断、仅引导、不替代心理咨询；遇到自伤、他伤、精神病性体验等风险，必须建议立即求助。
+方法：优先使用表达性写作、CBT、积极心理学、叙事疗法的开放式追问；不要替用户下结论。
+每次回复结尾附加隐藏格式：[EmotionScore:焦虑=1-5,低落=1-5,平静=1-5,释然=1-5,希望=1-5]。`;
+}
+
+async function handleSend() {
+    const text = els.chatInput.value.trim();
+    if (!text) return;
+    els.chatInput.value = '';
+    appendMessage('user', text);
+    saveDiary(`[自由树洞] ${text}`);
+
+    const crisisType = checkCrisis(text);
+    if (crisisType) {
+        triggerCrisis(crisisType);
+        appendMessage('assistant', CRISIS_MESSAGES[crisisType], [5, 5, 1, 1, 2]);
+        return;
+    }
+
+    const typing = $('typing-indicator');
+    if (typing) typing.style.display = 'flex';
+
+    try {
+        let reply;
+        if (apiConfig.key) {
+            const messages = [{ role: 'system', content: buildSystemPrompt(currentPersona) }];
+            chatHistory
+                .filter(item => item.role === 'user' || item.role === 'assistant')
+                .slice(-10)
+                .forEach(item => messages.push({ role: item.role, content: item.rawContent || item.content }));
+            reply = await requestAI(messages, 800);
+        } else {
+            reply = buildLocalChatReply(text);
+        }
+        const parsed = stripEmotionScore(reply);
+        const scores = parsed.scores || deriveEmotionScores(text, 3);
+        appendMessage('assistant', parsed.text, scores, reply);
+    } catch (error) {
+        appendSystemMessage(`AI 请求失败：${error.message}`);
+        const local = stripEmotionScore(buildLocalChatReply(text));
+        appendMessage('assistant', local.text, local.scores || deriveEmotionScores(text, 3));
+    } finally {
+        if (typing) typing.style.display = 'none';
+    }
+}
+
+async function requestAI(messages, maxTokens) {
+    const response = await fetch(apiConfig.url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiConfig.key}`
+        },
+        body: JSON.stringify({
+            model: apiConfig.model,
+            messages,
+            temperature: 0.62,
+            max_tokens: maxTokens
+        })
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    return data.choices?.[0]?.message?.content || '';
+}
+
+function buildLocalChatReply(text) {
+    const scores = deriveEmotionScores(text, 3);
+    const hasStudy = /考试|作业|论文|学习|绩点|挂科|复习|ddl|deadline/i.test(text);
+    const hasSelfBlame = /我不行|废物|没用|失败|完了|崩溃/.test(text);
+    let reply = '我读到了你现在的不轻松。先不用急着把自己调整好，能把这些写下来，本身就是在把情绪从心里移到纸面上。';
+    if (hasStudy) {
+        reply += '\n\n如果愿意，我们可以先选「CBT 认知改写」：把事件、自动想法和下一步拆开，别让焦虑把学习任务揉成一团。';
+    } else if (hasSelfBlame) {
+        reply += '\n\n你现在给自己的评价可能太重了。可以先写一句更温和的话：我正在经历困难，但这不等于我这个人失败。';
+    } else {
+        reply += '\n\n可以从「日常情绪书写」开始，只写 5 分钟，先给此刻的感受取一个名字。';
+    }
+    reply += `\n[EmotionScore:焦虑=${scores[0]},低落=${scores[1]},平静=${scores[2]},释然=${scores[3]},希望=${scores[4]}]`;
+    return reply;
+}
+
+function appendMessage(role, content, emotion = null, rawContent = null) {
+    const msg = {
+        role,
+        content,
+        rawContent: rawContent || content,
+        timestamp: Date.now(),
+        emotion
+    };
+    chatHistory.push(msg);
+    writeJson('wt_chatHistory', chatHistory);
+    renderSingleMessage(msg);
+}
+
+function appendSystemMessage(content) {
+    appendMessage('system', content);
+}
+
+function renderChat() {
+    els.chatHistory.innerHTML = '';
+    chatHistory.forEach(renderSingleMessage);
+    els.chatHistory.insertAdjacentHTML('beforeend', typingHtml);
+    els.chatHistory.scrollTop = els.chatHistory.scrollHeight;
+}
+
+function renderSingleMessage(msg) {
+    const typing = $('typing-indicator');
+    const div = document.createElement('div');
+    div.className = `message ${msg.role === 'assistant' ? 'assistant' : msg.role}`;
+    const content = document.createElement('div');
+    content.className = 'msg-content';
+    content.innerHTML = escapeHTML(msg.content).replace(/\n/g, '<br>');
+    div.appendChild(content);
+    if (typing && typing.parentNode === els.chatHistory) {
+        els.chatHistory.insertBefore(div, typing);
+    } else {
+        els.chatHistory.appendChild(div);
+    }
+    els.chatHistory.scrollTop = els.chatHistory.scrollHeight;
+}
+
+function stripEmotionScore(reply) {
+    const fallback = { text: reply.trim(), scores: null };
+    const match = reply.match(/\[EmotionScore:(.*?)\]/);
+    if (!match) return fallback;
+    const scores = [3, 3, 3, 3, 3];
+    match[1].split(',').forEach(part => {
+        const [key, value] = part.split('=').map(item => item.trim());
+        const parsed = clamp(Number(value), 1, 5);
+        if (key === '焦虑') scores[0] = parsed;
+        if (key === '低落') scores[1] = parsed;
+        if (key === '平静') scores[2] = parsed;
+        if (key === '释然') scores[3] = parsed;
+        if (key === '希望') scores[4] = parsed;
+    });
+    return {
+        text: reply.replace(/\[EmotionScore:.*?\]/, '').trim(),
+        scores
+    };
+}
+
+function deriveEmotionScores(text, moodAfter) {
+    const low = /难过|低落|哭|崩溃|累|麻木|绝望|委屈|失败/.test(text);
+    const anxious = /焦虑|害怕|担心|慌|紧张|考试|挂科|ddl|deadline|论文/.test(text);
+    const relief = /好一点|明白|放松|释然|可以|愿意|试试|谢谢/.test(text);
+    const mood = clamp(Number(moodAfter || 3), 1, 5);
+    return [
+        clamp((anxious ? 4 : 3) + (mood <= 2 ? 1 : 0) - (mood >= 4 ? 1 : 0), 1, 5),
+        clamp((low ? 4 : 2) + (mood <= 2 ? 1 : 0) - (mood >= 4 ? 1 : 0), 1, 5),
+        clamp(mood, 1, 5),
+        clamp((relief ? 4 : mood >= 4 ? 4 : 3), 1, 5),
+        clamp(mood >= 4 ? 4 : mood === 3 ? 3 : 2, 1, 5)
+    ];
+}
+
+function checkCrisis(text) {
+    const normalized = text.replace(/\s/g, '');
+    for (const [type, words] of Object.entries(CRISIS_DICT)) {
+        if (words.some(word => normalized.includes(word))) return type;
+    }
+    return null;
+}
+
+function triggerCrisis(type) {
+    $('crisis-message').textContent = CRISIS_MESSAGES[type] || CRISIS_MESSAGES.self_harm;
+    openModal('modal-crisis');
+}
+
+function renderAllRecords() {
+    renderStats();
+    renderEntriesList();
+    renderMoodChart();
+    renderRadarChart();
+}
+
+function renderStats() {
+    const count = moduleEntries.length;
+    const coverage = new Set(moduleEntries.map(entry => entry.moduleId)).size;
+    const streak = calculateStreak(moduleEntries);
+    const avgDelta = getAverageMoodDelta(moduleEntries);
+    setText('stat-total-entries', count);
+    setText('stat-streak-days', streak);
+    setText('stat-coverage', `${coverage}/4`);
+    setText('metric-entry-count', count);
+    setText('metric-mood-delta', avgDelta > 0 ? `+${avgDelta}` : `${avgDelta}`);
+    setText('metric-module-count', coverage);
+    setText('metric-last-date', count ? formatDate(moduleEntries[moduleEntries.length - 1].timestamp, true) : '无');
+}
+
+function setText(id, value) {
+    const el = $(id);
+    if (el) el.textContent = value;
+}
+
+function calculateStreak(entries) {
+    if (!entries.length) return 0;
+    const days = [...new Set(entries.map(entry => dateKey(entry.timestamp)))].sort().reverse();
+    let streak = 0;
+    let cursor = new Date(`${days[0]}T00:00:00`);
+    for (const day of days) {
+        if (day === dateKey(cursor.getTime())) {
+            streak += 1;
+            cursor.setDate(cursor.getDate() - 1);
+        } else {
+            break;
+        }
+    }
+    return streak;
+}
+
+function getAverageMoodDelta(entries) {
+    if (!entries.length) return 0;
+    const delta = entries.reduce((sum, entry) => sum + ((entry.moodAfter || 0) - (entry.moodBefore || 0)), 0) / entries.length;
+    return Math.round(delta * 10) / 10;
+}
+
+function renderEntriesList() {
+    const visible = currentFilter === 'all'
+        ? moduleEntries
+        : moduleEntries.filter(entry => entry.moduleId === currentFilter);
+
+    if (!visible.length) {
+        els.diariesList.innerHTML = '<div class="empty-state">还没有对应记录。完成一次结构化书写后，这里会出现可回看的笺页。</div>';
+        return;
+    }
+
+    els.diariesList.innerHTML = visible.slice().reverse().map(entry => {
+        const module = getModule(entry.moduleId) || { color: '#477c6b' };
+        const snippet = firstNonEmpty((entry.steps || []).map(step => step.content)).slice(0, 160);
+        return `
+            <article class="entry-item" style="--module-color:${module.color}">
+                <header>
+                    <strong>${escapeHTML(entry.moduleTitle)}</strong>
+                    <span>${formatDate(entry.timestamp)}</span>
+                </header>
+                <div class="entry-snippet">${escapeHTML(snippet || '这条记录暂时没有书写内容。')}</div>
+                <div class="entry-tags">
+                    <span>前 ${entry.moodBefore || '-'} 分</span>
+                    <span>后 ${entry.moodAfter || '-'} 分</span>
+                    ${entry.learningStep ? `<span>一小步：${escapeHTML(entry.learningStep)}</span>` : ''}
+                </div>
+            </article>
+        `;
+    }).join('');
+}
+
+function renderMoodChart() {
+    const canvas = $('moodChart');
+    const empty = $('moodChartEmpty');
+    if (!canvas || typeof Chart === 'undefined') {
+        if (empty) empty.style.display = 'grid';
+        return;
+    }
+    const ctx = canvas.getContext('2d');
+    if (chartInstance) chartInstance.destroy();
+
+    if (!moduleEntries.length) {
+        if (empty) empty.style.display = 'grid';
+        return;
+    }
+
+    if (empty) empty.style.display = 'none';
+    const labels = moduleEntries.map(entry => formatDate(entry.timestamp, true));
+    chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [
+                {
+                    label: '书写前',
+                    data: moduleEntries.map(entry => entry.moodBefore),
+                    borderColor: '#a45f64',
+                    backgroundColor: 'rgba(164,95,100,0.12)',
+                    borderWidth: 2,
+                    tension: 0.35
+                },
+                {
+                    label: '书写后',
+                    data: moduleEntries.map(entry => entry.moodAfter),
+                    borderColor: '#477c6b',
+                    backgroundColor: 'rgba(71,124,107,0.12)',
+                    borderWidth: 3,
+                    tension: 0.35
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { min: 1, max: 5, ticks: { stepSize: 1 }, grid: { color: 'rgba(37,49,45,0.08)' } },
+                x: { grid: { display: false } }
+            },
+            plugins: {
+                legend: { labels: { boxWidth: 10, color: '#25312d' } }
+            }
+        }
+    });
+}
+
+function renderRadarChart() {
+    const canvas = $('radarChart');
+    if (!canvas || typeof Chart === 'undefined') return;
+    const ctx = canvas.getContext('2d');
+    if (radarInstance) radarInstance.destroy();
+
+    let scores = [2, 2, 3, 3, 3];
+    const lastEntry = moduleEntries[moduleEntries.length - 1];
+    if (lastEntry?.emotionScores) {
+        scores = lastEntry.emotionScores;
+    } else {
+        const lastAi = chatHistory.slice().reverse().find(item => item.role === 'assistant' && Array.isArray(item.emotion));
+        if (lastAi) scores = lastAi.emotion;
+    }
+
+    radarInstance = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: ['焦虑', '低落', '平静', '释然', '希望'],
+            datasets: [{
+                label: '自我观察参考',
+                data: scores,
+                borderColor: '#5c709d',
+                backgroundColor: 'rgba(92,112,157,0.18)',
+                pointBackgroundColor: '#d8a64b',
+                pointBorderColor: '#fff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                r: {
+                    min: 0,
+                    max: 5,
+                    ticks: { display: false, stepSize: 1 },
+                    grid: { color: 'rgba(37,49,45,0.08)' },
+                    angleLines: { color: 'rgba(37,49,45,0.08)' },
+                    pointLabels: { color: '#25312d', font: { size: 12 } }
+                }
+            },
+            plugins: { legend: { display: false } }
+        }
+    });
+}
+
+function clearLocalData() {
+    if (!confirm('确定要清空心绪笺的本地演示数据吗？此操作不可恢复。')) return;
+    ['wt_chatHistory', 'wt_moduleEntries', 'wt_moduleDrafts', 'wt_activeDraft', 'wt_diaries', 'wt_moods', 'wt_settings_prompt_seen'].forEach(key => localStorage.removeItem(key));
+    chatHistory = [];
+    moduleEntries = [];
+    moduleDrafts = {};
+    activeDraft = createDraft('daily');
+    loadData();
+    renderWritingFlow();
+    renderChat();
+    renderAllRecords();
+    showToast('本地数据已清空。');
+}
+
+function exportCapsule() {
+    const text = (activeDraft.learningStep || '').trim();
+    if (!text) {
+        showToast('请先写下学习上的一小步。');
+        return;
+    }
+    els.capsuleText.textContent = text;
+    const card = $('healing-capsule-card');
+    if (typeof html2canvas === 'undefined') {
+        showToast('导出依赖尚未加载。');
+        return;
+    }
+    html2canvas(card, { backgroundColor: '#fbfaf4', scale: 2 }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = '心绪笺-今日一小步.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    });
+}
+
+async function toggleAmbient(button) {
+    const wasActive = button.classList.contains('active');
+    document.querySelectorAll('.ambient-btn').forEach(btn => btn.classList.remove('active'));
+    stopAmbient();
+    const label = button.dataset.sound === 'rain' ? '雨声' : '潮声';
+    if (wasActive) {
+        showToast(`${label}已关闭。`);
+        return;
+    }
+    const played = await playAmbient(button.dataset.sound);
+    if (played) {
+        button.classList.add('active');
+        showToast(`${label}已开启，再次点击可关闭。`);
+    }
+}
+
+async function playAmbient(type) {
+    try {
+        if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioContext.state === 'suspended') await audioContext.resume();
+        const bufferSize = audioContext.sampleRate * 2;
+        const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+        const output = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) output[i] = (Math.random() * 2 - 1) * (type === 'rain' ? 0.22 : 0.16);
+        const source = audioContext.createBufferSource();
+        source.buffer = buffer;
+        source.loop = true;
+        const filter = audioContext.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = type === 'rain' ? 1300 : 520;
+        const gain = audioContext.createGain();
+        gain.gain.value = type === 'rain' ? 0.16 : 0.18;
+        source.connect(filter);
+        filter.connect(gain);
+        gain.connect(audioContext.destination);
+        source.start();
+        currentNoise = source;
+        if (type === 'waves') {
+            const lfo = audioContext.createOscillator();
+            const lfoGain = audioContext.createGain();
+            lfo.frequency.value = 0.12;
+            lfoGain.gain.value = 0.04;
+            lfo.connect(lfoGain);
+            lfoGain.connect(gain.gain);
+            lfo.start();
+            currentLfo = lfo;
+        }
+        return true;
+    } catch (error) {
+        showToast('当前浏览器暂不支持白噪音播放。');
+        return false;
+    }
+}
+
+function stopAmbient() {
+    if (currentNoise) {
+        try { currentNoise.stop(); } catch (error) {}
+        currentNoise = null;
+    }
+    if (currentLfo) {
+        try { currentLfo.stop(); } catch (error) {}
+        currentLfo = null;
+    }
+}
+
+function showToast(message) {
+    els.toast.textContent = message;
+    els.toast.classList.add('show');
+    window.clearTimeout(showToast.timer);
+    showToast.timer = window.setTimeout(() => els.toast.classList.remove('show'), 2400);
+}
+
+function formatDate(timestamp, short = false) {
+    const date = new Date(timestamp);
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hour = String(date.getHours()).padStart(2, '0');
+    const minute = String(date.getMinutes()).padStart(2, '0');
+    if (short) return `${month}/${day} ${hour}:${minute}`;
+    return `${date.getFullYear()}-${month}-${day} ${hour}:${minute}`;
+}
+
+function dateKey(timestamp) {
+    const date = new Date(timestamp);
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+}
+
+function clamp(value, min, max) {
+    if (Number.isNaN(value)) return min;
+    return Math.min(max, Math.max(min, value));
+}
+
+function escapeHTML(value) {
+    return String(value ?? '').replace(/[&<>"']/g, char => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    }[char]));
+}
+
+document.addEventListener('DOMContentLoaded', init);
+
+</script>
+</body>
+</html>
